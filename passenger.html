@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#1a73e8">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="manifest" href="manifest.json">
@@ -11,32 +11,70 @@
   <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <title>JeepTrack &mdash; Passenger</title>
+  <title>JeepTrack — Passenger</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div class="passenger-page">
-    <div class="top-bar">
-      <span class="title">&#x1F68C; JeepTrack</span>
-      <span class="badge passenger" id="active-count">0 active</span>
-      <button class="btn-icon" id="btn-exit" title="Exit passenger mode">&#x2715;</button>
-    </div>
+  <div class="app-shell">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">JT</div>
+        <span>JeepTrack</span>
+      </div>
+      <div class="header-actions">
+        <span class="header-badge" id="active-count">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><circle cx="7" cy="17" r="2" fill="currentColor"/><circle cx="17" cy="17" r="2" fill="currentColor"/><line x1="3" y1="11" x2="21" y2="11"/></svg>
+          <span id="count-text">0 active</span>
+        </span>
+        <button class="btn btn-icon btn-ghost" id="btn-exit" title="Exit">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </header>
 
-    <div class="dest-bar">
-      <input type="text" id="dest-input" placeholder="Where are you going?" maxlength="100" autocomplete="off">
-      <button class="btn-dest" id="btn-dest-set">&#x1F4CD; Set on Map</button>
-      <button class="btn-dest-clear" id="btn-dest-clear">&#x2715;</button>
-    </div>
+    <!-- Map -->
+    <div class="passenger-map" id="map"></div>
 
-    <div id="map"></div>
+    <!-- Bottom Sheet -->
+    <div class="passenger-bottom" id="passenger-bottom">
+      <div class="sheet-handle" id="sheet-drag"></div>
+      <div class="sheet-tabs">
+        <button class="sheet-tab active" data-tab="destinations">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Where to?
+        </button>
+        <button class="sheet-tab" data-tab="nearby">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><circle cx="7" cy="17" r="2" fill="currentColor"/><circle cx="17" cy="17" r="2" fill="currentColor"/><line x1="3" y1="11" x2="21" y2="11"/></svg>
+          Nearby
+        </button>
+      </div>
+      <div class="sheet-content" id="sheet-content">
 
-    <div class="drawer-wrap">
-      <div class="drawer" id="drawer">
-        <div class="drawer-handle" id="drawer-handle">
-          <div class="drawer-bar" id="drawer-bar"></div>
-          <span class="drawer-label" id="drawer-label">0 jeepneys</span>
+        <!-- Destinations Tab -->
+        <div class="sheet-pane active" id="pane-destinations">
+          <div class="dest-confirm" id="dest-confirm" style="display:none;">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="dest-confirm-text" id="dest-confirm-text">Destination set</span>
+            <button class="dest-clear" id="dest-clear">Clear</button>
+          </div>
+
+          <div class="dest-search">
+            <input class="input-field" type="text" id="dest-search" placeholder="Search destinations..." autocomplete="off">
+            <button class="btn btn-sm btn-secondary" id="btn-dest-map">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Map
+            </button>
+          </div>
+
+          <div id="dest-list"></div>
         </div>
-        <div class="drawer-content hidden" id="drawer-content"></div>
+
+        <!-- Nearby Tab -->
+        <div class="sheet-pane" id="pane-nearby">
+          <div class="drawer-list" id="drawer-content"></div>
+        </div>
+
       </div>
     </div>
   </div>

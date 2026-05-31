@@ -10,6 +10,8 @@ const PRECACHE_URLS = [
   "/js/driver.js",
   "/js/passenger.js",
   "/js/helpers.js",
+  "/js/icons.js",
+  "/js/destinations.js",
   "/manifest.json",
   "/assets/icons/icon-192.png",
   "/assets/icons/icon-512.png",

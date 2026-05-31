@@ -11,6 +11,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 import { formatSpeed, formatAccuracy } from "./helpers.js";
+import { icons } from "./icons.js";
 
 let watchId = null;
 let isTracking = false;
@@ -37,6 +38,7 @@ const inputDest = $("input-dest");
 const saveRouteBtn = $("btn-save-route");
 const routeStatus = $("route-status");
 const passengerBadge = $("passenger-badge");
+const badgeText = $("badge-text");
 const overlay = $("passenger-overlay");
 const overlayClose = $("btn-overlay-close");
 const overlayCount = $("overlay-count");
@@ -97,8 +99,8 @@ function setStatus(style, text, sub) {
 
 function updateToggleButton() {
   const active = isTracking && currentUid;
-  toggleBtn.textContent = active ? "\u26D4 Stop Tracking" : "\u25B6 Start Tracking";
-  toggleBtn.className = "btn-primary " + (active ? "stop" : "start");
+  toggleBtn.textContent = active ? "Stop Tracking" : "Start Tracking";
+  toggleBtn.className = "btn-toggle " + (active ? "stop" : "start");
   toggleBtn.disabled = !currentUid;
 }
 
@@ -293,8 +295,8 @@ function updateOverlayMarkers(passengers) {
     const destName = dest?.name || "";
     const label = destName.length > 22 ? destName.slice(0, 20) + "..." : (destName || "Waiting");
     const popup = dest
-      ? `<div style="font-family:sans-serif;"><strong>\uD83E\uDDD1 Passenger</strong><br><span style="color:#666;">Going to: ${destName}</span></div>`
-      : `<div style="font-family:sans-serif;"><strong>\uD83E\uDDD1 Passenger</strong><br><span style="color:#666;">Waiting</span></div>`;
+      ? `<div style="font-family:sans-serif;"><strong>${icons.people} Passenger</strong><br><span style="color:#666;">Going to: ${destName}</span></div>`
+      : `<div style="font-family:sans-serif;"><strong>${icons.people} Passenger</strong><br><span style="color:#666;">Waiting</span></div>`;
 
     const html = `<div style="display:flex;flex-direction:column;align-items:center;">
       <div style="width:12px;height:12px;border-radius:50%;background:#f59e0b;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
@@ -379,7 +381,7 @@ onValue(ref(db, "jeepTrack/passengers"), (snapshot) => {
     lastPassengerSnapshot[id] = d;
   });
 
-  passengerBadge.textContent = `\uD83E\uDDD1 ${Object.keys(lastPassengerSnapshot).length} nearby`;
+  badgeText.textContent = `${Object.keys(lastPassengerSnapshot).length} nearby`;
 
   updateOverlayMarkers(lastPassengerSnapshot);
 });
