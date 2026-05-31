@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a73e8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon.png">
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <title>JeepTrack</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="landing">
+    <h1>&#x1F68C; JeepTrack</h1>
+    <p class="tagline">Real-time Jeepney GPS Tracking</p>
+    <div class="role-buttons">
+      <button class="role-btn driver" id="btn-driver">
+        <span class="icon">&#x1F697;</span>
+        <span>I'm a Driver</span>
+        <span class="desc">Share your GPS location</span>
+      </button>
+      <button class="role-btn passenger" id="btn-passenger">
+        <span class="icon">&#x1F441;&#xFE0F;</span>
+        <span>I'm a Passenger</span>
+        <span class="desc">Find jeepneys near you</span>
+      </button>
+    </div>
+  </div>
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

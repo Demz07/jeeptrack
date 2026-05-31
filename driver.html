@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon.png">
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>JeepTrack &mdash; Driver</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="top-bar">
+    <span class="title">&#x1F68C; JeepTrack</span>
+    <span class="badge driver">Driver</span>
+    <span class="badge passenger clickable" id="passenger-badge">&#x1F9D1; 0 nearby</span>
+    <button class="btn-icon" id="btn-exit" title="Exit driver mode">&#x2715;</button>
+  </div>
+
+  <div class="driver-container">
+    <div class="card status-card">
+      <div class="status-row">
+        <span class="status-dot" id="status-dot"></span>
+        <span class="status-text" id="status-text">Initializing&hellip;</span>
+      </div>
+      <div class="status-sub" id="status-sub"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Vehicle</div>
+      <div class="plate-row">
+        <span class="plate-number" id="plate-number">&mdash;</span>
+        <button class="btn-link" id="btn-plate-edit">Edit</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Route</div>
+      <div class="input-group">
+        <input type="text" id="input-origin" placeholder="Origin (e.g. Calauag)" maxlength="50" autocomplete="off">
+        <input type="text" id="input-dest" placeholder="Destination (e.g. Lopez, Quezon)" maxlength="50" autocomplete="off">
+      </div>
+      <button class="btn-primary start" id="btn-save-route">Save Route</button>
+      <div style="margin-top:8px;font-size:0.8125rem;color:var(--text-secondary);text-align:center;" id="route-status"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Location</div>
+      <div class="data-grid">
+        <div class="data-item">
+          <span class="data-label">Latitude</span>
+          <span class="data-value" id="gps-lat">&mdash;</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">Longitude</span>
+          <span class="data-value" id="gps-lng">&mdash;</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">Speed</span>
+          <span class="data-value" id="gps-speed">0 <small>km/h</small></span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">Accuracy</span>
+          <span class="data-value" id="gps-accuracy">&mdash;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="live-map-card" style="display:none;">
+      <div class="card-title">Live Map</div>
+      <div id="driver-live-map" style="height:200px;border-radius:8px;overflow:hidden;"></div>
+    </div>
+
+    <button class="btn-primary start" id="btn-toggle" disabled>&#x25B6; Start Tracking</button>
+  </div>
+
+  <div class="modal-overlay" id="modal-plate" style="display:none;">
+    <div class="modal">
+      <h2>Vehicle Plate Number</h2>
+      <p>Enter the plate number of your jeepney so passengers can identify it on the map.</p>
+      <input type="text" id="input-plate" placeholder="e.g. ABC-123" maxlength="15" autocomplete="off">
+      <button class="btn-primary start" id="btn-plate-save">Save</button>
+    </div>
+  </div>
+
+  <div class="passenger-overlay" id="passenger-overlay">
+    <div class="overlay-top">
+      <h3>&#x1F9D1; Nearby Passengers <span id="overlay-count">(0)</span></h3>
+      <button class="btn-icon" id="btn-overlay-close">&#x2715;</button>
+    </div>
+    <div id="passenger-map"></div>
+  </div>
+
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="js/driver.js"></script>
+</body>
+</html>

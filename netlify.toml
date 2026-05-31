@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/driver"
+  to = "/driver.html"
+  status = 200
+
+[[redirects]]
+  from = "/passenger"
+  to = "/passenger.html"
+  status = 200

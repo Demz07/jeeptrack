@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon.png">
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>JeepTrack &mdash; Passenger</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="passenger-page">
+    <div class="top-bar">
+      <span class="title">&#x1F68C; JeepTrack</span>
+      <span class="badge passenger" id="active-count">0 active</span>
+      <button class="btn-icon" id="btn-exit" title="Exit passenger mode">&#x2715;</button>
+    </div>
+
+    <div class="dest-bar">
+      <input type="text" id="dest-input" placeholder="Where are you going?" maxlength="100" autocomplete="off">
+      <button class="btn-dest" id="btn-dest-set">&#x1F4CD; Set on Map</button>
+      <button class="btn-dest-clear" id="btn-dest-clear">&#x2715;</button>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="drawer-wrap">
+      <div class="drawer" id="drawer">
+        <div class="drawer-handle" id="drawer-handle">
+          <div class="drawer-bar" id="drawer-bar"></div>
+          <span class="drawer-label" id="drawer-label">0 jeepneys</span>
+        </div>
+        <div class="drawer-content hidden" id="drawer-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="js/passenger.js"></script>
+</body>
+</html>
