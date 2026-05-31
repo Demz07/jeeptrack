@@ -15,11 +15,17 @@
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+  <!-- Splash -->
+  <div id="splash">
+    <img class="splash-icon" src="assets/icons/JT_ICON.png" alt="JeepTrack">
+    <div class="splash-title">JeepTrack</div>
+    <div class="splash-spinner"></div>
+  </div>
+
   <div class="app-shell">
-    <!-- Header -->
     <header class="app-header">
       <div class="brand">
-        <div class="logo">JT</div>
+        <img class="logo-img" src="assets/icons/JT_ICON.png" alt="JeepTrack">
         <span>JeepTrack</span>
       </div>
       <div class="header-actions">
@@ -36,7 +42,7 @@
     <!-- Map -->
     <div class="passenger-map" id="map"></div>
 
-    <!-- Bottom Sheet -->
+    <!-- Bottom Sheet (collapsible) -->
     <div class="passenger-bottom" id="passenger-bottom">
       <div class="sheet-handle" id="sheet-drag"></div>
       <div class="sheet-tabs">
@@ -80,9 +86,9 @@
   </div>
 
   <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
-  }
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+  window.hideSplash = () => document.getElementById("splash").classList.add("hide");
+  setTimeout(window.hideSplash, 5000);
   </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="js/passenger.js"></script>

@@ -15,11 +15,17 @@
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+  <!-- Splash -->
+  <div id="splash">
+    <img class="splash-icon" src="assets/icons/JT_ICON.png" alt="JeepTrack">
+    <div class="splash-title">JeepTrack</div>
+    <div class="splash-spinner"></div>
+  </div>
+
   <div class="app-shell">
-    <!-- Header -->
     <header class="app-header">
       <div class="brand">
-        <div class="logo">JT</div>
+        <img class="logo-img" src="assets/icons/JT_ICON.png" alt="JeepTrack">
         <span>JeepTrack</span>
       </div>
       <div class="header-actions">
@@ -30,9 +36,7 @@
       </div>
     </header>
 
-    <!-- Content -->
     <div class="app-content" id="app-content">
-      <!-- Status -->
       <div class="card">
         <div class="status-bar">
           <span class="status-dot" id="status-dot"></span>
@@ -43,7 +47,6 @@
         </div>
       </div>
 
-      <!-- Plate & Vehicle -->
       <div class="card plate-card">
         <div class="plate-display">
           <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><circle cx="7" cy="17" r="2" fill="currentColor"/><circle cx="17" cy="17" r="2" fill="currentColor"/><line x1="3" y1="11" x2="21" y2="11"/></svg>
@@ -52,7 +55,6 @@
         <button class="btn btn-sm btn-ghost" id="btn-plate-edit">Edit</button>
       </div>
 
-      <!-- Route -->
       <div class="card">
         <div class="card-title">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 9l6 6"/></svg>
@@ -75,33 +77,19 @@
         <div class="route-status" id="route-status"></div>
       </div>
 
-      <!-- GPS Data -->
       <div class="card">
         <div class="card-title">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0110 10"/><path d="M12 6a6 6 0 016 6"/><circle cx="12" cy="12" r="2"/></svg>
           GPS Signal
         </div>
         <div class="gps-grid">
-          <div class="gps-item">
-            <div class="label">Latitude</div>
-            <div class="value" id="gps-lat">—</div>
-          </div>
-          <div class="gps-item">
-            <div class="label">Longitude</div>
-            <div class="value" id="gps-lng">—</div>
-          </div>
-          <div class="gps-item">
-            <div class="label">Speed</div>
-            <div class="value" id="gps-speed">0 km/h</div>
-          </div>
-          <div class="gps-item">
-            <div class="label">Accuracy</div>
-            <div class="value" id="gps-accuracy">—</div>
-          </div>
+          <div class="gps-item"><div class="label">Latitude</div><div class="value" id="gps-lat">—</div></div>
+          <div class="gps-item"><div class="label">Longitude</div><div class="value" id="gps-lng">—</div></div>
+          <div class="gps-item"><div class="label">Speed</div><div class="value" id="gps-speed">0 km/h</div></div>
+          <div class="gps-item"><div class="label">Accuracy</div><div class="value" id="gps-accuracy">—</div></div>
         </div>
       </div>
 
-      <!-- Live Map -->
       <div class="card map-card" id="live-map-card" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;">
           <span class="card-title" style="margin:0;">
@@ -113,7 +101,6 @@
       </div>
     </div>
 
-    <!-- Bottom Bar -->
     <div class="app-bottom">
       <div class="bottom-row">
         <button class="btn-toggle start" id="btn-toggle" disabled>Start Tracking</button>
@@ -126,9 +113,7 @@
   <div class="modal-overlay" id="modal-plate">
     <div class="modal-box">
       <div class="modal-title">Vehicle Plate Number</div>
-      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">
-        Enter your jeepney's plate number so passengers can identify you on the map.
-      </p>
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">Enter your jeepney's plate number so passengers can identify you on the map.</p>
       <input class="input-field" type="text" id="input-plate" placeholder="e.g. ABC-123" maxlength="15" autocomplete="off">
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="document.getElementById('modal-plate').classList.remove('open')">Cancel</button>
@@ -152,9 +137,9 @@
   </div>
 
   <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
-  }
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+  window.hideSplash = () => document.getElementById("splash").classList.add("hide");
+  setTimeout(window.hideSplash, 5000);
   </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="js/driver.js"></script>

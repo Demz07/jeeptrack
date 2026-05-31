@@ -105,13 +105,13 @@ function updateToggleButton() {
 }
 
 function showPlateModal() {
-  plateModal.style.display = "flex";
+  plateModal.classList.add("open");
   inputPlate.value = plateNumber;
   inputPlate.focus();
 }
 
 function hidePlateModal() {
-  plateModal.style.display = "none";
+  plateModal.classList.remove("open");
 }
 
 function onGpsSuccess(pos) {
@@ -352,6 +352,8 @@ onAuthStateChanged(auth, (user) => {
     });
 
     statusSub.textContent = `ID: ${currentUid.slice(0, 8)}\u2026`;
+
+    window.hideSplash();
 
     if (plateNumber) {
       setStatus("", "Ready", "Tap Start to begin tracking");

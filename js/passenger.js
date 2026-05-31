@@ -114,6 +114,7 @@ onAuthStateChanged(auth, (user) => {
     const statusRef = ref(db, `jeepTrack/passengers/${currentUid}/status`);
     onDisconnect(statusRef).update({ isActive: false });
     update(ref(db, `jeepTrack/passengers/${currentUid}/status`), { isActive: true, lastSeen: Date.now() });
+    window.hideSplash();
     startGpsWatch();
   } else {
     currentUid = null; stopGpsWatch();
@@ -275,6 +276,8 @@ function setDestination(lat, lng, name) {
   if (!currentUid) return;
   set(ref(db, `jeepTrack/passengers/${currentUid}/destination`), { lat, lng, name, timestamp: Date.now() });
   currentDestSet = true;
+  passengerBottom.classList.remove("collapsed");
+  
   if (destMarker) { destMarker.setLatLng([lat, lng]); }
   else {
     const pinHtml = `<div style="position:relative;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3" fill="#dc2626"/></svg></div>`;
@@ -323,7 +326,8 @@ map.on("click", (e) => {
 
 // ── Tab switching ──
 document.querySelectorAll(".sheet-tab").forEach(tab => {
-  tab.addEventListener("click", () => {
+  tab.addEventListener("click", (e) => {
+    e.stopPropagation();
     document.querySelectorAll(".sheet-tab").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".sheet-pane").forEach(p => p.classList.remove("active"));
     tab.classList.add("active");
@@ -331,6 +335,24 @@ document.querySelectorAll(".sheet-tab").forEach(tab => {
     if (pane) pane.classList.add("active");
     if (tab.dataset.tab === "nearby") setTimeout(() => map.invalidateSize(), 100);
   });
+});
+
+// ── Collapsible bottom sheet ──
+const passengerBottom = $("passenger-bottom");
+const sheetDrag = $("sheet-drag");
+
+function toggleSheet(e) {
+  e.stopPropagation();
+  passengerBottom.classList.toggle("collapsed");
+  setTimeout(() => map.invalidateSize(), 350);
+}
+
+sheetDrag.addEventListener("click", toggleSheet);
+
+document.querySelector(".sheet-tabs")?.addEventListener("click", (e) => {
+  if (e.target.closest(".sheet-tab")) return;
+  passengerBottom.classList.remove("collapsed");
+  setTimeout(() => map.invalidateSize(), 350);
 });
 
 // ── Nearby drawer ──
@@ -361,7 +383,10 @@ function populateDrawer(items) {
 // ── Event listeners ──
 btnDestMap.addEventListener("click", toggleMapClick);
 
-destSearch.addEventListener("input", () => searchDestinations(destSearch.value));
+destSearch.addEventListener("input", () => {
+  passengerBottom.classList.remove("collapsed");
+  searchDestinations(destSearch.value);
+});
 destSearch.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && destSearch.value.trim()) {
     searchDestinations(destSearch.value);

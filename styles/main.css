@@ -619,6 +619,58 @@ button { cursor: pointer; border: none; background: none; }
 .dest-confirm-icon { font-size: 20px; }
 .dest-confirm-text { flex: 1; font-size: 13px; font-weight: 500; color: var(--secondary-dark); }
 
+/* ── Splash Screen ── */
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.4s ease;
+}
+#splash.hide { opacity: 0; pointer-events: none; }
+.splash-icon {
+  width: 88px; height: 88px;
+  border-radius: 22px;
+  margin-bottom: 16px;
+}
+.splash-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 28px;
+}
+.splash-spinner {
+  width: 24px; height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: splash-spin 0.8s linear infinite;
+}
+@keyframes splash-spin { to { transform: rotate(360deg); } }
+
+/* ── Logo Image ── */
+.logo-img {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: block;
+}
+.logo-landing {
+  width: 72px; height: 72px;
+  border-radius: 20px;
+  display: block;
+}
+
+/* ── Collapsible Passenger Bottom ── */
+.passenger-bottom.collapsed {
+  max-height: 52px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
 /* ── Init/Empty States ── */
 .empty-state {
   display: flex;
