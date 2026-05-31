@@ -1,23 +1,24 @@
 const CACHE_NAME = "jeeptrack-v2";
-const PRECACHE_URLS = [
-  "/",
-  "/index.html",
-  "/driver.html",
-  "/passenger.html",
-  "/styles/main.css",
-  "/js/firebase-init.js",
-  "/js/app.js",
-  "/js/driver.js",
-  "/js/passenger.js",
-  "/js/helpers.js",
-  "/js/icons.js",
-  "/js/destinations.js",
-  "/manifest.json",
-  "/assets/icons/icon-192.png",
-  "/assets/icons/icon-512.png",
-  "/assets/icons/favicon.png",
-  "/assets/icons/favicon.ico"
+const BASE = self.location.pathname.replace(/sw\.js$/, "");
+const PRECACHE_FILES = [
+  "index.html",
+  "driver.html",
+  "passenger.html",
+  "styles/main.css",
+  "js/firebase-init.js",
+  "js/app.js",
+  "js/driver.js",
+  "js/passenger.js",
+  "js/helpers.js",
+  "js/icons.js",
+  "js/destinations.js",
+  "manifest.json",
+  "assets/icons/icon-192.png",
+  "assets/icons/icon-512.png",
+  "assets/icons/favicon.png",
+  "assets/icons/favicon.ico"
 ];
+const PRECACHE_URLS = PRECACHE_FILES.map(f => BASE + f);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

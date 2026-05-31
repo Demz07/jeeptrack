@@ -2,7 +2,7 @@
   "name": "JeepTrack",
   "short_name": "JeepTrack",
   "description": "Real-time Jeepney GPS Tracking System",
-  "start_url": "/index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#1a73e8",
